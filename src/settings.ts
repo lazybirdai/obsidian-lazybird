@@ -121,8 +121,16 @@ export class LazybirdSettingTab extends PluginSettingTab {
 					},
 					{
 						name: "Speed",
-						desc: "1 is normal speed.",
-						control: { type: "slider", key: "speed", min: 0.5, max: 2, step: 0.1, defaultValue: 1 },
+						desc: "1.0× is normal speed.",
+						control: {
+							type: "slider",
+							key: "speed",
+							min: 0.5,
+							max: 2,
+							step: 0.1,
+							defaultValue: 1,
+							displayFormat: (value) => `${value.toFixed(1)}×`,
+						},
 					},
 				],
 			},

@@ -63,7 +63,8 @@ export class LazybirdApi {
 		const all = (await this.call("GET", "/voices", undefined, false)).json as Voice[];
 		const library = all.filter((v) => v.scope === "global");
 		if (!this.getKey()) return library;
-		const own = (await this.call("GET", "/voices?owner=me")).json as Voice[];
+		// Voices the account shared to the community stay out; the picker lists private voices only.
+		const own = ((await this.call("GET", "/voices?owner=me")).json as Voice[]).filter((v) => v.scope !== "community");
 		const ownIds = new Set(own.map((v) => v.id));
 		return [...own.map((v) => ({ ...v, mine: true })), ...library.filter((v) => !ownIds.has(v.id))];
 	}
@@ -106,7 +107,8 @@ function toError(response: RequestUrlResponse): LazybirdError {
 	let retryAfter: number | undefined;
 	try {
 		const json = response.json as { error?: string; retryAfterSeconds?: number } | null;
-		message = (json?.error ?? "").replace(/^[A-Za-z ]+Error: /, "");
+		// "Authorization Error: …", "Invalid Input: …" read better without the prefix.
+		message = (json?.error ?? "").replace(/^[A-Za-z ]+(?:Error|Input): /, "");
 		retryAfter = json?.retryAfterSeconds;
 	} catch {
 		// Not JSON; fall back to the status below.
@@ -115,6 +117,13 @@ function toError(response: RequestUrlResponse): LazybirdError {
 	retryAfter ??= header ? Number(header) || undefined : undefined;
 
 	switch (status) {
+		case 400:
+			return new LazybirdError(
+				/voice not found/i.test(message)
+					? "That voice isn't available. Choose another voice in the plugin's options."
+					: message || "Lazybird couldn't read this request.",
+				status,
+			);
 		case 401:
 			return new LazybirdError("Your Lazybird API key isn't valid. Sign in again in the plugin's options.", status);
 		case 422:

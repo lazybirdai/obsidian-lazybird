@@ -53,7 +53,7 @@ describe("noteToSpeechText", () => {
 			[
 				"Big heading.",
 				"Ends with question?",
-				"Callout title",
+				"Callout title.",
 				"Quoted bold and italic and under and gone and marked.",
 				"Task item",
 				"Numbered code item tag",

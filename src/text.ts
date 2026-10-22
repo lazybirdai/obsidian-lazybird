@@ -73,9 +73,10 @@ function cleanLine(raw: string): string | null {
 	// Horizontal rules end a paragraph.
 	if (/^\s*([-*_])(\s*\1){2,}\s*$/.test(line)) return "";
 
-	// Blockquotes and callouts: "> [!note] Title" keeps the title.
+	// Blockquotes and callouts: "> [!note] Title" keeps the title, read like a heading.
 	line = line.replace(/^(\s*>)+\s?/, "");
-	line = line.replace(/^\[![^\]]*\][+-]?\s*/, "");
+	const callout = /^\[![^\]]*\][+-]?\s*(.*)$/.exec(line);
+	if (callout) line = endSentence(callout[1] ?? "");
 
 	// Headings, list markers and task boxes.
 	const heading = /^\s{0,3}#{1,6}\s+(.*?)\s*#*\s*$/.exec(line);

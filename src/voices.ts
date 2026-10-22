@@ -49,7 +49,7 @@ export class VoiceSuggestModal extends FuzzySuggestModal<Voice> {
 			voice.mine ? "Your voice" : "",
 			this.languageName(voice),
 			voice.languageGroup === "multilingual" ? "multilingual" : "",
-			voice.gender ?? "",
+			voice.gender === "unknown" ? "" : (voice.gender ?? ""),
 		].filter(Boolean);
 		el.createDiv({ cls: "lazybird-voice-details", text: details.join(" · ") });
 		if (voice.id === this.plugin.settings.voiceId) el.addClass("is-current");
