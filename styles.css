@@ -25,6 +25,11 @@
 	height: var(--icon-xs);
 }
 
+/* Solid play, pause and stop, so stop doesn't read as a checkbox. */
+.lazybird-player-button .svg-icon:not(.lucide-loader) {
+	fill: currentColor;
+}
+
 .lazybird-player-button .svg-icon.lucide-loader {
 	animation: lazybird-spin 1.2s linear infinite;
 }
