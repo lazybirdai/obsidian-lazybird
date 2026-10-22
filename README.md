@@ -2,7 +2,7 @@
 
 Read your notes aloud and save them as MP3 files with natural AI voices. Works on desktop and mobile.
 
-<video src="https://github.com/user-attachments/assets/ead72223-6da0-4e81-818a-05ceb6c4925f" controls></video>
+<video src="https://github.com/user-attachments/assets/3a5da43a-da69-4112-b07d-b4b83f595efd" controls></video>
 
 ## Features
 
