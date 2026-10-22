@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-lazybird",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Read your notes aloud and save them as MP3 files with natural AI voices.",
 	"private": true,
 	"main": "main.js",

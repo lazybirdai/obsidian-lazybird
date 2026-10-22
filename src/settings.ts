@@ -64,12 +64,14 @@ export class LazybirdSettingTab extends PluginSettingTab {
 						desc: "Sign in or create a free account. We'll email you a 6-digit code.",
 						visible: () => !signedIn(),
 						render: (setting) => {
-							setting.addText((text) =>
+							setting.addText((text) => {
+								text.inputEl.type = "email";
+								text.inputEl.autocomplete = "email";
 								text
 									.setPlaceholder("you@example.com")
 									.setValue(this.email)
-									.onChange((value) => (this.email = value.trim())),
-							);
+									.onChange((value) => (this.email = value.trim()));
+							});
 							setting.addButton((button) =>
 								button
 									.setButtonText(this.codeSentTo ? "Send again" : "Send code")
@@ -84,12 +86,15 @@ export class LazybirdSettingTab extends PluginSettingTab {
 						desc: this.codeSentTo ? `Enter the code we sent to ${this.codeSentTo}.` : "",
 						visible: () => !signedIn() && this.codeSentTo !== "",
 						render: (setting) => {
-							setting.addText((text) =>
+							setting.addText((text) => {
+								// Brings up the number pad on phones.
+								text.inputEl.inputMode = "numeric";
+								text.inputEl.autocomplete = "one-time-code";
 								text
 									.setPlaceholder("123456")
 									.setValue(this.code)
-									.onChange((value) => (this.code = value.trim())),
-							);
+									.onChange((value) => (this.code = value.trim()));
+							});
 							setting.addButton((button) =>
 								button
 									.setButtonText("Sign in")

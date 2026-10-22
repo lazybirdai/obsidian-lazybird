@@ -1,4 +1,4 @@
-import { MarkdownView, Notice, Plugin, type TFile } from "obsidian";
+import { MarkdownView, Notice, Plugin, TFile } from "obsidian";
 import { LazybirdApi, type Voice } from "./api";
 import { Player } from "./player";
 import { saveNoteAsMp3 } from "./save";
@@ -14,8 +14,46 @@ export default class LazybirdPlugin extends Plugin {
 
 	async onload(): Promise<void> {
 		this.settings = { ...DEFAULT_SETTINGS, ...((await this.loadData()) as Partial<LazybirdSettings> | null) };
-		this.player = new Player(this, this.addStatusBarItem());
+		this.player = new Player(this);
 		this.addSettingTab(new LazybirdSettingTab(this.app, this));
+
+		this.addRibbonIcon("audio-lines", "Read note aloud", () => {
+			const file = this.activeNote();
+			if (file) void this.readAloud(file);
+			else new Notice("Open a note to read it aloud.");
+		});
+
+		// The note's "More options" menu, which is also how mobile reaches these.
+		this.registerEvent(
+			this.app.workspace.on("file-menu", (menu, file) => {
+				if (!(file instanceof TFile) || file.extension !== "md") return;
+				menu.addItem((item) =>
+					item.setSection("action").setTitle("Read aloud").setIcon("audio-lines").onClick(() => void this.readAloud(file)),
+				);
+				menu.addItem((item) =>
+					item
+						.setSection("action")
+						.setTitle("Save as MP3")
+						.setIcon("file-audio")
+						.setDisabled(this.saving)
+						.onClick(() => void this.saveAsMp3(file)),
+				);
+			}),
+		);
+
+		this.registerEvent(
+			this.app.workspace.on("editor-menu", (menu, editor) => {
+				const selection = editor.getSelection();
+				if (!selection.trim()) return;
+				menu.addItem((item) =>
+					item
+						.setSection("selection")
+						.setTitle("Read selection aloud")
+						.setIcon("text-select")
+						.onClick(() => this.speak(noteToSpeechText(selection))),
+				);
+			}),
+		);
 
 		this.addCommand({
 			id: "read-note-aloud",

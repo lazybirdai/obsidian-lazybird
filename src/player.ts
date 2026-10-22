@@ -1,4 +1,4 @@
-import { Notice, setIcon, setTooltip } from "obsidian";
+import { Notice, Platform, setIcon, setTooltip } from "obsidian";
 import { LazybirdError } from "./api";
 import type LazybirdPlugin from "./main";
 import { splitIntoChunks } from "./text";
@@ -19,7 +19,8 @@ interface Clip {
 
 /**
  * Reads text aloud chunk by chunk, generating the next chunks while the
- * current one plays. Its controls live in the status bar.
+ * current one plays. Its controls live in the status bar on desktop. Mobile
+ * doesn't show the status bar, so there they float above the navigation bar.
  */
 export class Player {
 	private state: State = "idle";
@@ -30,19 +31,21 @@ export class Player {
 	/** Bumped on every new run so stale callbacks from an old one do nothing. */
 	private run = 0;
 
-	private readonly statusEl: HTMLElement;
+	private readonly containerEl: HTMLElement;
 	private readonly playPauseEl: HTMLElement;
 	private readonly labelEl: HTMLElement;
 
-	constructor(
-		private readonly plugin: LazybirdPlugin,
-		statusBarEl: HTMLElement,
-	) {
-		this.statusEl = statusBarEl;
-		this.statusEl.addClass("lazybird-player");
-		this.playPauseEl = this.statusEl.createSpan({ cls: "lazybird-player-button" });
-		const stopEl = this.statusEl.createSpan({ cls: "lazybird-player-button" });
-		this.labelEl = this.statusEl.createSpan({ cls: "lazybird-player-label" });
+	constructor(private readonly plugin: LazybirdPlugin) {
+		if (Platform.isMobile) {
+			this.containerEl = document.body.createDiv({ cls: "lazybird-player mod-floating" });
+			plugin.register(() => this.containerEl.remove());
+		} else {
+			this.containerEl = plugin.addStatusBarItem();
+			this.containerEl.addClass("lazybird-player");
+		}
+		this.playPauseEl = this.containerEl.createSpan({ cls: "lazybird-player-button" });
+		const stopEl = this.containerEl.createSpan({ cls: "lazybird-player-button" });
+		this.labelEl = this.containerEl.createSpan({ cls: "lazybird-player-label" });
 		setIcon(stopEl, "square");
 		setTooltip(stopEl, "Stop", { placement: "top" });
 		plugin.registerDomEvent(this.playPauseEl, "click", () => this.togglePause());
@@ -146,7 +149,7 @@ export class Player {
 	}
 
 	private render(): void {
-		this.statusEl.toggleClass("is-hidden", this.state === "idle");
+		this.containerEl.toggleClass("is-hidden", this.state === "idle");
 		const part = this.chunks.length > 1 ? ` ${this.index + 1}/${this.chunks.length}` : "";
 		if (this.state === "loading") {
 			setIcon(this.playPauseEl, "loader");

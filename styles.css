@@ -1,4 +1,4 @@
-/* Status-bar player */
+/* Player */
 .lazybird-player {
 	display: flex;
 	align-items: center;
@@ -32,6 +32,33 @@
 
 .lazybird-player-button .svg-icon.lucide-loader {
 	animation: lazybird-spin 1.2s linear infinite;
+}
+
+/* Mobile has no status bar, so the player floats above the navigation bar. */
+.lazybird-player.mod-floating {
+	position: fixed;
+	left: 50%;
+	bottom: calc(var(--safe-area-inset-bottom, 0px) + var(--navbar-height, 52px) + var(--size-4-3));
+	transform: translateX(-50%);
+	z-index: var(--layer-status-bar);
+	gap: var(--size-4-2);
+	padding: var(--size-4-1) var(--size-4-4) var(--size-4-1) var(--size-4-2);
+	background-color: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-xl);
+	box-shadow: var(--shadow-s);
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+	white-space: nowrap;
+}
+
+.lazybird-player.mod-floating .lazybird-player-button {
+	padding: var(--size-4-2);
+}
+
+.lazybird-player.mod-floating .lazybird-player-button svg {
+	width: var(--icon-s);
+	height: var(--icon-s);
 }
 
 @keyframes lazybird-spin {
