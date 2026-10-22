@@ -2,7 +2,7 @@
 
 Read your notes aloud and save them as MP3 files with natural AI voices. Works on desktop and mobile.
 
-![Reading a note aloud from the ribbon, with the player in the status bar](docs/reading-note.png)
+<video src="https://github.com/user-attachments/assets/ee940736-0dfa-4f06-a88f-63c5eb0deaf8" controls></video>
 
 ## Features
 
@@ -13,6 +13,8 @@ Read your notes aloud and save them as MP3 files with natural AI voices. Works o
 - **500+ voices in 80+ languages**, plus the voices you've made in your Lazybird account. Search voices by name or language. Speed from 0.5× to 2×.
 - **Reads what matters.** Properties, code blocks, math, comments, HTML, URLs and embeds are skipped. Links are read as their text, and headings get a short pause.
 - **Desktop and mobile.** On mobile, find **Read aloud** and **Save as MP3** in the note's **⋮** menu.
+
+![Reading a note aloud from the ribbon, with the player in the status bar](docs/reading-note.png)
 
 ![Reading a selection from the editor menu](docs/read-selection.png)
 
