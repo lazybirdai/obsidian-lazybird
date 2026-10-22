@@ -1,5 +1,3 @@
-<!-- GitHub shows .github/README.md instead of this file; keep the two in sync. -->
-
 # Lazybird
 
 Read your notes aloud and save them as MP3 files with natural AI voices. Works on desktop and mobile.
