@@ -1,7 +1,7 @@
 {
 	"id": "lazybird",
 	"name": "Lazybird",
-	"version": "1.1.0",
+	"version": "1.1.1",
 	"minAppVersion": "1.13.4",
 	"description": "Read your notes aloud and save them as MP3 files with natural AI voices.",
 	"author": "Lazybird",
