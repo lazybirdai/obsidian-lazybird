@@ -13,8 +13,8 @@ export interface LazybirdSettings {
 
 export const DEFAULT_SETTINGS: LazybirdSettings = {
 	apiKeySecret: "",
-	voiceId: "msa.en-US.AvaMultilingual",
-	voiceName: "Ava",
+	voiceId: "tgJ2Hes6DauwTg8kFrRPLN",
+	voiceName: "Elyssia",
 	speed: 1,
 };
 
