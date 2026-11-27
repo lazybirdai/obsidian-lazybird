@@ -10,7 +10,7 @@ Read your notes aloud and save them as MP3 files with natural AI voices. Works o
 - **Read selection aloud.** Select text, right-click it and choose **Read selection aloud**.
 - **Save note as MP3.** Choose **Save as MP3** in the note's menu. The audio is saved to your attachment folder, and an embed such as `![[My note.mp3]]` is added at the top of the note, below its properties.
 - **Player controls.** Pause, resume or stop from the status bar on desktop, or from the floating player on mobile.
-- **500+ voices in 80+ languages**, plus the voices you've made in your Lazybird account. Search voices by name or language. Speed from 0.5× to 2×.
+- **Realistic voices in 80 languages**, plus the voices you've cloned or designed in your Lazybird account. Search voices by name or language. Speed from 0.5× to 2×.
 - **Reads what matters.** Properties, code blocks, math, comments, HTML, URLs and embeds are skipped. Links are read as their text, and headings get a short pause.
 - **Desktop and mobile.** On mobile, find **Read aloud** and **Save as MP3** in the note's **⋮** menu.
 
