@@ -129,7 +129,7 @@ function toError(response: RequestUrlResponse): LazybirdError {
 		case 422:
 			return new LazybirdError(
 				/credit/i.test(message)
-					? "You're out of Lazybird credits. Get more at lazybird.app/pricing, or wait for your monthly credits to reset."
+					? "You're out of Lazybird credits. Get more at lazybird.app/pricing."
 					: `${message || "Your plan doesn't allow this request."} See lazybird.app/pricing.`,
 				status,
 			);
